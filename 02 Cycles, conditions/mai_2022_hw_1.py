@@ -68,11 +68,11 @@ for drone, weight in zip(drone_list, drone_weight_list):
     else:
         not_register.append(current_drone)
 
-print('Drones to be registered:')
+print('\nDrones to be registered:')
 for drone in register:
     print(f'{provider_names[drone[0]]} {" ".join(drone[1:])}')
 
-print('Drones that do not need to be registered:')
+print('\nDrones that do not need to be registered:')
 for drone in not_register:
     print(f'{provider_names[drone[0]]} {" ".join(drone[1:])}')
 
@@ -81,11 +81,16 @@ for drone in not_register:
 # высота 100 м, полет над населенным пунктом, вне закрытых зон, в прямой видимости
 # помните, что для дронов тяжелее 150 г согласовывать полет над населенным пунктом - обязательно!
 
+height = 150
+is_np = True
+closed_zone = False
+direct_vision = True
+
 agreement = []
 for drone, weight in zip(drone_list, drone_weight_list):
     current_drone = drone.split(' ')
     current_drone[0] = current_drone[0].lower()
-    if weight > 150:
+    if (height > 150) or (is_np and weight > 150) or closed_zone or not direct_vision:
         agreement.append((current_drone, 'YES'))
     else:
         agreement.append((current_drone, 'NO'))
